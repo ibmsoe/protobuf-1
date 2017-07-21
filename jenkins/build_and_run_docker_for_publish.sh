@@ -13,10 +13,22 @@ set -ex
 
 cd $(dirname $0)/..
 git_root=$(pwd)
-cd -
+
+# clone pkgbuild from internal git hub - key needed in build slave 
+# into the same dir as protobuf (git_root). The container will
+# clone each repo into it's own space.
+
+rm -rf pkgbuild
+git clone $PKGBUILD_REMOTE
+#cd -
+
+# checkout pkgbuild commit level
+cd pkgbuild
+git checkout $PKGBUILD_COMMIT
+cd $git_root
 
 # Use image name based on Dockerfile location checksum
-DOCKER_IMAGE_NAME=$(basename $DOCKERFILE_DIR)_$(sha1sum $DOCKERFILE_DIR/Dockerfile.powerai | cut -f1 -d\ )
+DOCKER_IMAGE_NAME=$(basename $DOCKERFILE_DIR)_$(sha1sum $DOCKERFILE_DIR/Dockerfile | cut -f1 -d\ )
 
 # Make sure docker image has been built. Should be instantaneous if so.
 docker build -t $DOCKER_IMAGE_NAME $DOCKERFILE_DIR

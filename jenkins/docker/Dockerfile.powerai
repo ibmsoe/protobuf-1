@@ -7,7 +7,6 @@
 # changes.
 
 # Base Dockerfile for gRPC dev images
-#FROM ppc64le/debian:latest
 FROM ppc64le/ubuntu:latest
 
 # Apt source for old Python versions.
@@ -52,29 +51,14 @@ RUN apt-get update && apt-get install -y \
   parallel \
   time \
   wget \
-  # -- For csharp --
-  #mono-devel \
-  #referenceassemblies-pcl \
-  #nunit \
-  # -- For all Java builds -- \
   maven \
-  # -- For java_jdk6 -- \
-  #   oops! not in jessie. too old? openjdk-6-jdk \
-  # -- For java_jdk7 -- \
   openjdk-8-jdk \
-  # -- For java_oracle7 -- \
-  #oracle-java7-installer \
-  # -- For python / python_cpp -- \
   python-setuptools \
   python-pip \
   python-dev \
-  #python2.6-dev \
-  #python3.3-dev \
-  #python3.4-dev \
-  # -- For Ruby --
   ruby \
-  unzip \
   debhelper \
+  unzip \
   && apt-get clean
 
 ##################
